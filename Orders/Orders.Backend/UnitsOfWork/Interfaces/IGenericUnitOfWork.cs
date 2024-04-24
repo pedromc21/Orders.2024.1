@@ -2,7 +2,7 @@
 
 namespace Orders.Backend.UnitsOfWork.Interfaces
 {
-    public interface IGenericUnitOfWork<T> where T : class
+    public interface IGenericRepository<T> where T : class
     {
         Task<ActionResponse<IEnumerable<T>>> GetAsync();
 

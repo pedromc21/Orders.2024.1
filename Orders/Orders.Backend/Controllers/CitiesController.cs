@@ -6,12 +6,11 @@ namespace Orders.Backend.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class CategoriesController : GenericController<Category>
+    public class CitiesController : GenericController<City>
     {
-        public CategoriesController(IGenericRepository<Category> unitOfWork) : base(unitOfWork)
+        public CitiesController(IGenericRepository<City> unitOfWork) : base(unitOfWork)
         {
 
         }
-
     }
 }

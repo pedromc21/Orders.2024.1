@@ -6,6 +6,10 @@ namespace Orders.Backend.Data
     {
         private readonly DataContext _context;
 
+        public SeedDb(DataContext context)
+        {
+            _context = context;
+        }
         public async Task SeedAsync()
         {
             await _context.Database.EnsureCreatedAsync();
@@ -103,7 +107,6 @@ namespace Orders.Backend.Data
                     ]
                 });
             }
-
             await _context.SaveChangesAsync();
         }
     }

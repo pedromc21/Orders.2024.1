@@ -1,0 +1,12 @@
+﻿
+@page "/countries/details/{CountryId:int}"
+
+@if (country is null)
+{
+    <Loading />
+}
+else
+{
+    <h3>@country.Name</h3>
+
+}

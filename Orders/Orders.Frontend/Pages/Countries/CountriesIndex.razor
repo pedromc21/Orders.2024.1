@@ -19,16 +19,11 @@
                         <button type="button" class="btn btn-outline-danger" @onclick="CleanFilterAsync"><i class="bi bi-x-circle" /> Limpiar</button>
                     </div>
                 </div>
-
-                @*<Pagination CurrentPage="currentPage"
-                            TotalPages="totalPages"
-                            SelectedPage="SelectedPageAsync" />*@
-
                 <table class="table-striped table">
                     <thead>
                         <tr>
                             <th>País</th>
-                            <th style="width:210px">Estados / Departamentos</th>
+                            <th style="width:210px">Estados</th>
                             <th style="width:168px"></th>
                         </tr>
                     </thead>
@@ -36,10 +31,11 @@
                         @foreach (var country in Countries!)
                         {
                             <tr>
-                                <td><a href="/countries/details/@country.Id"> @country.Name</a></td>
-                                @*<td>@country.StatesNumber</td>*@
+                                <td> @country.Name</td>
+                                <td>@country.StatesNumber</td>
                                 <td>
                                     <a href="/countries/edit/@country.Id" class="btn btn-sm btn-warning"><i class="bi bi-pencil" /> Editar</a>
+                                    <a href="/countries/details/@country.Id" class="btn btn-sm btn-info"> Detalles</a>
                                     <button @onclick=@(() => DeleteAsycn(country)) class="btn btn-sm btn-danger"><i class="bi bi-trash" /> Borrar</button>
                                 </td>
                             </tr>

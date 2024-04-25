@@ -13,18 +13,21 @@ else
         <a class="btn btn-sm btn-success float-end" href="/countries"><i class="bi bi-arrow-left" />Regresar</a>
     </div>
     <h4>Estados</h4>
-    <GenericList MyList="country.States!.ToList()">
+    <GenericList MyList="states!">
         <Body>
+            <Pagination CurrentPage="currentPage"
+                        TotalPages="totalPages"
+                        SelectedPage="SelectedPageAsync" />
             <table class="table-striped table">
                 <thead>
                     <tr>
-                        <th>Estado</th>
-                        <th>Ciudades</th>
-                        <th></th>
+                        <th style="width:150px">Estado</th>
+                        <th style="width:150px">Ciudades</th>
+                        <th style="width:150px"></th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var state in country.States!)
+                    @foreach (var state in states!)
                     {
                         <tr>
                             <td>@state.Name</td>
@@ -35,8 +38,8 @@ else
                                 <button class="btn btn-danger btn-sm" @onclick=@(() => DeleteAsync(state))><i class="bi bi-trash" /> Borrar</button>
                             </td>
                         </tr>
-                            }
-                    </tbody>
+                    }
+                </tbody>
             </table>
         </Body>
     </GenericList>

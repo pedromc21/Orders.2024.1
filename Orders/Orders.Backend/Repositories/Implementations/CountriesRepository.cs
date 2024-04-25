@@ -16,12 +16,18 @@ namespace Orders.Backend.Repositories.Implementations
         {
             _context = context;
         }
+
         //Paginacion
         public override async Task<ActionResponse<IEnumerable<Country>>> GetAsync(PaginationDTO pagination)
         {
             var queryable = _context.Countries
                 .Include(c => c.States)
                 .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(pagination.Filter))
+            {
+                queryable = queryable.Where(x => x.Name.ToLower().Contains(pagination.Filter.ToLower()));
+            }
 
             return new ActionResponse<IEnumerable<Country>>
             {
@@ -30,6 +36,23 @@ namespace Orders.Backend.Repositories.Implementations
                     .OrderBy(x => x.Name)
                     .Paginate(pagination)
                     .ToListAsync()
+            };
+        }
+        public override async Task<ActionResponse<int>> GetTotalPagesAsync(PaginationDTO pagination)
+        {
+            var queryable = _context.Countries.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(pagination.Filter))
+            {
+                queryable = queryable.Where(x => x.Name.ToLower().Contains(pagination.Filter.ToLower()));
+            }
+
+            double count = await queryable.CountAsync();
+            int totalPages = (int)Math.Ceiling(count / pagination.RecordsNumber);
+            return new ActionResponse<int>
+            {
+                WasSuccess = true,
+                Result = totalPages
             };
         }
 
@@ -55,6 +78,7 @@ namespace Orders.Backend.Repositories.Implementations
                 Result = country
             };
         }
+
         public override async Task<ActionResponse<IEnumerable<Country>>> GetAsync()
         {
             var countries = await _context.Countries

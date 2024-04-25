@@ -8,7 +8,7 @@ namespace Orders.Backend.Controllers
     [Route("api/[controller]")]
     public class CategoriesController : GenericController<Category>
     {
-        public CategoriesController(IGenericRepository<Category> unitOfWork) : base(unitOfWork)
+        public CategoriesController(IGenericUnitOfWork<Category> unitOfWork) : base(unitOfWork)
         {
 
         }

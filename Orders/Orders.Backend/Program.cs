@@ -15,17 +15,21 @@ builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer("name=LocalConnec
 builder.Services.AddTransient<SeedDb>();
 
 builder.Services.AddScoped(typeof(Orders.Backend.Repositories.Interfaces.IGenericRepository<>), typeof(GenericRepository<>));
-builder.Services.AddScoped(typeof(Orders.Backend.UnitsOfWork.Interfaces.IGenericRepository<>), typeof(GenericUnitOfWork<>));
+builder.Services.AddScoped(typeof(Orders.Backend.UnitsOfWork.Interfaces.IGenericUnitOfWork<>), typeof(GenericUnitOfWork<>));
 
-//builder.Services.AddScoped<ICategoriesRepository, CategoriesRepository>();
-//builder.Services.AddScoped<ICitiesRepository, CitiesRepository>();
+builder.Services.AddScoped<ICategoriesRepository, CategoriesRepository>();
+builder.Services.AddScoped<ICategoriesUnitOfWork, CategoriesUnitOfWork>();
+
 builder.Services.AddScoped<ICountriesRepository, CountriesRepository>();
-builder.Services.AddScoped<IStatesRepository, StatesRepository>();
+builder.Services.AddScoped<ICountriesUnitOfWork, CountriesUnitOfWork>();
 
-//builder.Services.AddScoped<ICategoriesUnitOfWork, CategoriesUnitOfWork>();
+builder.Services.AddScoped<IStatesRepository, StatesRepository>();
+builder.Services.AddScoped<IStatesUnitOfWork, StatesUnitOfWork>();
+
+//builder.Services.AddScoped<ICitiesRepository, CitiesRepository>();
 //builder.Services.AddScoped<ICitiesUnitOfWork, CitiesUnitOfWork>();
-//builder.Services.AddScoped<ICountriesUnitOfWork, CountriesUnitOfWork>();
-//builder.Services.AddScoped<IStatesUnitOfWork, StatesUnitOfWork>();
+
+
 
 var app = builder.Build();
 

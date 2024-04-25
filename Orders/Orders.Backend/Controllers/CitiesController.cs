@@ -8,7 +8,7 @@ namespace Orders.Backend.Controllers
     [Route("api/[controller]")]
     public class CitiesController : GenericController<City>
     {
-        public CitiesController(IGenericRepository<City> unitOfWork) : base(unitOfWork)
+        public CitiesController(IGenericUnitOfWork<City> unitOfWork) : base(unitOfWork)
         {
 
         }

@@ -9,7 +9,7 @@ namespace Orders.Backend.UnitsOfWork.Implementations
     {
         private readonly IStatesRepository _statesRepository;
 
-        public StatesUnitOfWork(Interfaces.IGenericRepository<State> repository, IStatesRepository statesRepository) : base(repository)
+        public StatesUnitOfWork(IGenericRepository<State> repository, IStatesRepository statesRepository) : base(repository)
         {
             _statesRepository = statesRepository;
         }
@@ -17,6 +17,5 @@ namespace Orders.Backend.UnitsOfWork.Implementations
         public override async Task<ActionResponse<IEnumerable<State>>> GetAsync() => await _statesRepository.GetAsync();
 
         public override async Task<ActionResponse<State>> GetAsync(int id) => await _statesRepository.GetAsync(id);
-
     }
 }

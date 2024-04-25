@@ -9,7 +9,7 @@ namespace Orders.Backend.UnitsOfWork.Implementations
     {
         private readonly ICategoriesRepository _categoriesRepository;
 
-        public CategoriesUnitOfWork(Interfaces.IGenericRepository<Category> repository, ICategoriesRepository categoriesRepository) : base(repository)
+        public CategoriesUnitOfWork(IGenericRepository<Category> repository, ICategoriesRepository categoriesRepository) : base(repository)
         {
             _categoriesRepository = categoriesRepository;
         }

@@ -9,7 +9,7 @@ namespace Orders.Backend.UnitsOfWork.Implementations
     {
         private readonly ICountriesRepository _countriesRepository;
 
-        public CountriesUnitOfWork(Interfaces.IGenericRepository<Country> repository, ICountriesRepository countriesRepository) : base(repository)
+        public CountriesUnitOfWork(IGenericRepository<Country> repository, ICountriesRepository countriesRepository) : base(repository)
         {
             _countriesRepository = countriesRepository;
         }

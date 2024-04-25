@@ -8,5 +8,36 @@
 else
 {
     <h3>@country.Name</h3>
-
+    <div class="mb-2">
+        <a class="btn btn-sm btn-primary mx-1 float-end" href="/states/create/@country.Id"><i class="bi bi-plus-square" />  Nuevo Estado</a>
+        <a class="btn btn-sm btn-success float-end" href="/countries"><i class="bi bi-arrow-left" />Regresar</a>
+    </div>
+    <h4>Estados</h4>
+    <GenericList MyList="country.States!.ToList()">
+        <Body>
+            <table class="table-striped table">
+                <thead>
+                    <tr>
+                        <th>Estado</th>
+                        <th>Ciudades</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var state in country.States!)
+                    {
+                        <tr>
+                            <td>@state.Name</td>
+                            <td>@state.CitiesNumber</td>
+                            <td>
+                                <a class="btn btn-warning btn-sm" href="/states/edit/@state.Id"><i class="bi bi-pencil" /> Editar</a>
+                                <a class="btn btn-info btn-sm" href="/states/details/@state.Id"><i class="bi bi-pencil" /> Detalles</a>
+                                <button class="btn btn-danger btn-sm" @onclick=@(() => DeleteAsync(state))><i class="bi bi-trash" /> Borrar</button>
+                            </td>
+                        </tr>
+                            }
+                    </tbody>
+            </table>
+        </Body>
+    </GenericList>
 }

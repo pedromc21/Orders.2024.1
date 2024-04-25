@@ -2,67 +2,62 @@
 using Microsoft.AspNetCore.Components;
 using Orders.Frontend.Repositories;
 using Orders.Shared.Entities;
+using System;
 using System.Net;
 
-namespace Orders.Frontend.Pages.Countries
+namespace Orders.Frontend.Pages.Categories
 {
-    public partial class CountryDetails
+    public partial class CategoriesIndex
     {
-        private Country? country;
-        [Inject] private NavigationManager NavigationManager { get; set; } = null!;
-        [Inject] private SweetAlertService SweetAlertService { get; set; } = null!;
         [Inject] private IRepository Repository { get; set; } = null!;
-        [Parameter] public int CountryId { get; set; }
+        [Inject] private SweetAlertService SweetAlertService { get; set; } = null!;
+        [Inject] private NavigationManager NavigationManager { get; set; } = null!;
+
+        public List<Category>? Categories { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
             await LoadAsync();
         }
-
-        private async Task LoadAsync()
+        private async Task LoadAsync(int page = 1)
         {
-            var responseHttp = await Repository.GetAsync<Country>($"/api/countries/{CountryId}");
+            var responseHttp = await Repository.GetAsync<List<Category>>("api/categories");
             if (responseHttp.Error)
             {
-                if (responseHttp.HttpResponseMessage.StatusCode == HttpStatusCode.NotFound)
-                {
-                    NavigationManager.NavigateTo("/countries");
-                    return;
-                }
-
                 var message = await responseHttp.GetErrorMessageAsync();
                 await SweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
                 return;
             }
-            country = responseHttp.Response;
+            Categories = responseHttp.Response;
         }
-        private async Task DeleteAsync(State state)
+        private async Task DeleteAsycn(Category category)
         {
             var result = await SweetAlertService.FireAsync(new SweetAlertOptions
             {
                 Title = "Confirmación",
-                Text = $"¿Realmente deseas eliminar el estado? {state.Name}",
+                Text = $"¿Estas seguro de querer borrar la categoría: {category.Name}?",
                 Icon = SweetAlertIcon.Question,
                 ShowCancelButton = true,
-                CancelButtonText = "No",
-                ConfirmButtonText = "Si"
             });
-
             var confirm = string.IsNullOrEmpty(result.Value);
             if (confirm)
             {
                 return;
             }
 
-            var responseHttp = await Repository.DeleteAsync<State>($"/api/states/{state.Id}");
+            var responseHttp = await Repository.DeleteAsync<Category>($"api/categories/{category.Id}");
             if (responseHttp.Error)
             {
-                if (responseHttp.HttpResponseMessage.StatusCode != HttpStatusCode.NotFound)
+                if (responseHttp.HttpResponseMessage.StatusCode == HttpStatusCode.NotFound)
                 {
-                    var message = await responseHttp.GetErrorMessageAsync();
-                    await SweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
-                    return;
+                    NavigationManager.NavigateTo("/categories");
                 }
+                else
+                {
+                    var mensajeError = await responseHttp.GetErrorMessageAsync();
+                    await SweetAlertService.FireAsync("Error", mensajeError, SweetAlertIcon.Error);
+                }
+                return;
             }
 
             await LoadAsync();
@@ -75,5 +70,6 @@ namespace Orders.Frontend.Pages.Countries
             });
             await toast.FireAsync(icon: SweetAlertIcon.Success, message: "Registro borrado con éxito.");
         }
+
     }
 }

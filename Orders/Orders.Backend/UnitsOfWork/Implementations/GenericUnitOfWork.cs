@@ -1,15 +1,14 @@
 ﻿using Orders.Backend.Repositories.Interfaces;
 using Orders.Backend.UnitsOfWork.Interfaces;
-using Orders.Shared.Entities;
 using Orders.Shared.Responses;
 
 namespace Orders.Backend.UnitsOfWork.Implementations
 {
-    public class GenericUnitOfWork<T> : Interfaces.IGenericRepository<T> where T : class
+    public class GenericUnitOfWork<T> : IGenericUnitOfWork<T> where T : class
     {
-        private readonly Interfaces.IGenericRepository<T> _repository;
+        private readonly IGenericRepository<T> _repository;
 
-        public GenericUnitOfWork(Interfaces.IGenericRepository<T> repository)
+        public GenericUnitOfWork(IGenericRepository<T> repository)
         {
             _repository = repository;
         }

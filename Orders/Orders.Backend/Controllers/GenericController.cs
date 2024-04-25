@@ -5,9 +5,9 @@ namespace Orders.Backend.Controllers
 {
     public class GenericController<T> : Controller where T : class
     {
-        private readonly IGenericRepository<T> _unitOfWork;
+        private readonly IGenericUnitOfWork<T> _unitOfWork;
 
-        public GenericController(IGenericRepository<T> unitOfWork)
+        public GenericController(IGenericUnitOfWork<T> unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }

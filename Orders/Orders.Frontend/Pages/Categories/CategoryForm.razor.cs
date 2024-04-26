@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components;
 using Orders.Shared.Entities;
 using Microsoft.AspNetCore.Components.Routing;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Orders.Frontend.Pages.Categories
 {
+    [Authorize(Roles = "Admin")]
     public partial class CategoryForm
     {
         private EditContext editContext = null!;
